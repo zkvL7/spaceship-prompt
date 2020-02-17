@@ -40,6 +40,7 @@ fi
 
 if [ -z "$SPACESHIP_PROMPT_ORDER" ]; then
   SPACESHIP_PROMPT_ORDER=(
+    cmd_timestamp # Commands timestamp
     time          # Time stampts section
     user          # Username section
     dir           # Current directory section
@@ -194,6 +195,10 @@ prompt_spaceship_setup() {
   add-zsh-hook preexec spaceship_exec_time_preexec_hook
   add-zsh-hook precmd spaceship_exec_time_precmd_hook
 
+  # Add cmd_timestamp hooks
+  add-zsh-hook preexec spaceship_cmd_timestamp_preexec_hook
+  add-zsh-hook precmd spaceship_cmd_timestamp_precmd_hook
+  
   # Disable python virtualenv environment prompt prefix
   VIRTUAL_ENV_DISABLE_PROMPT=true
 
