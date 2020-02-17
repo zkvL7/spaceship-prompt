@@ -27,3 +27,30 @@ spaceship_exec_vcs_info_precmd_hook() {
   [[ $SPACESHIP_GIT_BRANCH_SHOW == false ]] && return
   vcs_info
 }
+
+# Custom hooks for cmd timestamp
+spaceship_cmd_timestamp_preexec_hook() {
+  [[ $SPACESHIP_CMD_TIMESTAMP_SHOW == false ]] && return
+  
+  local 'SPACESHIP_CMD_TIMESTAMP_start'
+  if [[ $SPACESHIP_CMD_TIMESTAMP_FORMAT != false ]]; then
+    SPACESHIP_CMD_TIMESTAMP_start="${SPACESHIP_CMD_TIMESTAMP_FORMAT}"
+  else
+    SPACESHIP_CMD_TIMESTAMP_start="%D{%c}"
+  fi
+
+  print -P "%F{$SPACESHIP_CMD_TIMESTAMP_COLOR}$SPACESHIP_CMD_TIMESTAMP_PREFIX_START$SPACESHIP_CMD_TIMESTAMP_start$SPACESHIP_CMD_TIMESTAMP_SUFFIX_START%f"
+}
+
+spaceship_cmd_timestamp_precmd_hook() {
+  [[ $SPACESHIP_CMD_TIMESTAMP_SHOW == false ]] && return
+
+  local 'SPACESHIP_CMD_TIMESTAMP_end'
+  if [[ $SPACESHIP_CMD_TIMESTAMP_FORMAT != false ]]; then
+    SPACESHIP_CMD_TIMESTAMP_end="${SPACESHIP_CMD_TIMESTAMP_FORMAT}"
+  else
+    SPACESHIP_CMD_TIMESTAMP_end="%D{%c}"
+  fi
+  
+  print -P "%F{$SPACESHIP_CMD_TIMESTAMP_COLOR}$NEWLINE$SPACESHIP_CMD_TIMESTAMP_PREFIX_END$SPACESHIP_CMD_TIMESTAMP_end$SPACESHIP_CMD_TIMESTAMP_SUFFIX_END%f"
+}
